@@ -17,6 +17,7 @@
 import os
 import re
 import subprocess
+import sys
 
 import six
 
@@ -47,7 +48,7 @@ class _SimpleProtoParams(object):
         if self.path is None:
             self.path = subprocess.check_output(
                 ['which', 'grpc_{}_plugin'.format(self.language)],
-                stderr=subprocess.STDOUT)
+                stderr=subprocess.STDOUT).decode('utf-8')
             self.path = six.text_type(self.path)[:-1]
         return self.path
 
@@ -69,7 +70,7 @@ class _JavaProtoParams(_SimpleProtoParams):
     def proto_plugin_path(self):
         return subprocess.check_output(
             ['which', 'gapic_plugin.py'],
-            stderr=subprocess.STDOUT).strip()
+            stderr=subprocess.STDOUT).strip().decode('utf-8')
 
     def plugin_out_param(self, output_dir, plugin_args=None):
         # Java proto plugin requires the gapic yaml as a plugin arg
@@ -188,7 +189,7 @@ class _PythonProtoParams(_SimpleProtoParams):
 
     @property
     def proto_compiler_command(self):
-        return ['python', '-m', 'grpc.tools.protoc']
+        return [sys.executable, '-m', 'grpc.tools.protoc']
 
 
 PROTO_PARAMS_MAP = {
