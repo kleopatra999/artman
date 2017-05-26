@@ -36,7 +36,7 @@ ARTMAN_CONFIG_BLACKLIST = [
 ]
 
 # Not ready to test Go and Csharp yet.
-SUPPORTED_LANGS = ['python', 'java', 'ruby', 'nodejs', 'php', 'go']
+SUPPORTED_LANGS = ['python', 'java', 'ruby', 'nodejs', 'php', 'go', 'csharp']
 
 
 def run_smoke_test(apis):
